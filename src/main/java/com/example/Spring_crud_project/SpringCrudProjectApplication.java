@@ -1,7 +1,9 @@
 package com.example.Spring_crud_project;
 
-import com.example.Spring_crud_project.entity.Customer;
-import com.example.Spring_crud_project.repository.CustomerRepository;
+import com.example.Spring_crud_project.entity.Author;
+import com.example.Spring_crud_project.entity.Book;
+import com.example.Spring_crud_project.repository.AuthorRepository;
+import com.example.Spring_crud_project.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,36 +23,64 @@ public class SpringCrudProjectApplication {
 
 
 	@Bean
-	public CommandLineRunner demo(CustomerRepository repository) {
+	public CommandLineRunner demo(AuthorRepository authorRepository, BookRepository bookRepository) {
 		return (args) -> {
-			// save a few customers
-			repository.save(new Customer("Jack", "Bauer"));
-			repository.save(new Customer("Chloe", "O'Brian"));
-			repository.save(new Customer("Kim", "Bauer"));
-			repository.save(new Customer("David", "Palmer"));
-			repository.save(new Customer("Michelle", "Dessler"));
+			// ── Create authors ──────────────────────────────────────
+			Author tolkien = new Author();
+			tolkien.setFirstName("J.R.R");
+			tolkien.setLastName("Tolkien");
+			authorRepository.save(tolkien);
 
-			// fetch all customers
-			logger.info("Customers found with finaAll()");
-			logger.info("-------------------------------");
-			repository.findAll().forEach(customer -> {
-				logger.info(customer.toString());
-			});
-			logger.info("");
+			Author orwell = new Author();
+			orwell.setFirstName("George");
+			orwell.setLastName("Orwell");
+			authorRepository.save(orwell);
 
-			// fetch an individual customer by ID
-			Customer customer = repository.findCustomerById(1L);
-			logger.info("Customer found with findById(1L)");
-			logger.info("-------------------------------");
-			logger.info(customer.toString());
-			logger.info("");
+			Author rowling = new Author();
+			rowling.setFirstName("J.K");
+			rowling.setLastName("Rowling");
+			authorRepository.save(rowling);
 
-			// fetch customers by last name
-			logger.info("Customer found with findByLastName('Bauer'):");
-			logger.info("--------------------------------------------");
-			logger.info(Integer.toString(repository.findCustomersByLastName("Bauer").size()));
-			logger.info("--------------------------------------------");
+			// ── Create books and link to authors ────────────────────
+			Book fellowship = new Book();
+			fellowship.setTitle("The Fellowship of the Ring");
+			fellowship.setIsbn("978-0-261-10235-4");
+			fellowship.setAuthor(tolkien);
+			bookRepository.save(fellowship);
 
+			Book twoTowers = new Book();
+			twoTowers.setTitle("The Two Towers");
+			twoTowers.setIsbn("978-0-261-10236-1");
+			twoTowers.setAuthor(tolkien);
+			bookRepository.save(twoTowers);
+
+			Book nineteenEightyFour = new Book();
+			nineteenEightyFour.setTitle("1984");
+			nineteenEightyFour.setIsbn("978-0-451-52493-5");
+			nineteenEightyFour.setAuthor(orwell);
+			bookRepository.save(nineteenEightyFour);
+
+			Book philosophersStone = new Book();
+			philosophersStone.setTitle("Harry Potter and the Philosophers Stone");
+			philosophersStone.setIsbn("978-0-7475-3269-9");
+			philosophersStone.setAuthor(rowling);
+			bookRepository.save(philosophersStone);
+
+			// ── Log what was saved ──────────────────────────────────
+			logger.info("=== Authors saved ===");
+			authorRepository.findAll().forEach(a ->
+					logger.info("Author: {} {}", a.getFirstName(), a.getLastName())
+			);
+
+			logger.info("=== Books saved ===");
+			bookRepository.findAll().forEach(b ->
+					logger.info("Book: '{}' by {} {} | ISBN: {}",
+							b.getTitle(),
+							b.getAuthor().getFirstName(),
+							b.getAuthor().getLastName(),
+							b.getIsbn()
+					)
+			);
 		};
 	}
 }
