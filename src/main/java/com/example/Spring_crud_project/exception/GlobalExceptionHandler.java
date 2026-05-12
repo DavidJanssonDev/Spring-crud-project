@@ -1,6 +1,5 @@
 package com.example.Spring_crud_project.exception;
 
-
 import com.example.Spring_crud_project.exception.customExceptions.NoBookWithIDFoundException;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;

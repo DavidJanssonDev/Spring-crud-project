@@ -1,4 +1,5 @@
 package com.example.Spring_crud_project.dto.classes;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
