@@ -1,9 +1,16 @@
 package com.example.Spring_crud_project.dto.classes;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Data
-public class AuthorDto {
-    private Long id;
-    private String firstName;
-    private String lastName;
-}
+public record AuthorDto(
+
+        Long id,
+        @NotBlank(message = "Author first name is required")
+        @Size(min = 2, max = 50)
+        String firstName,
+
+        @NotBlank(message = "Author last name is required")
+        @Size(min = 2, max = 50)
+        String lastName
+
+) {}

@@ -1,25 +1,19 @@
 package com.example.Spring_crud_project.dto.mapper;
 
+
 import com.example.Spring_crud_project.dto.classes.BookDto;
 import com.example.Spring_crud_project.entity.Book;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
 
-@Component
-public class BookMapper {
+@Mapper(componentModel = "spring", uses = AuthorMapper.class, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+public interface BookMapper {
 
-    private final ModelMapper modelMapper;
+    @Mapping(target = "title", source = "title")
+    @Mapping(target = "isbn", source = "isbn")
+    @Mapping(target = "author", source = "author")
+    BookDto toDto(Book book);
 
-    public BookMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
-    public BookDto toDto(Book book) {
-        return modelMapper.map(book, BookDto.class);
-    }
-
-    public Book fromDto(BookDto dto) {
-        return modelMapper.map(dto, Book.class);
-    }
-
+    Book fromDto(BookDto bookDto);
 }

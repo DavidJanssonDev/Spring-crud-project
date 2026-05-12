@@ -1,7 +1,7 @@
 package com.example.Spring_crud_project.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.Spring_crud_project.exception.customExceptions.NoBookWithIDFoundException;
+
 import com.example.Spring_crud_project.entity.Author;
 import com.example.Spring_crud_project.entity.Book;
 import com.example.Spring_crud_project.repository.AuthorRepository;
@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
-    private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
@@ -26,10 +25,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book createBook(Book book) {
 
-        log.info("🔍 Checking author: {} {}",
-                book.getAuthor().getFirstName(),
-                book.getAuthor().getLastName()
-        );
 
         Author incomingAuthor = book.getAuthor();
 
@@ -39,19 +34,11 @@ public class BookServiceImpl implements BookService {
                         incomingAuthor.getLastName()
                 )
                 .orElseGet(() -> {
-                    log.info("🆕 Author not found → creating new one");
                     return authorRepository.save(incomingAuthor);
                 });
 
-        log.info("👤 Using author ID: {}", authorToUse.getId());
-
         book.setAuthor(authorToUse);
-
-        Book saved = bookRepository.save(book);
-
-        log.info("📚 Book saved with ID: {}", saved.getId());
-
-        return saved;
+        return bookRepository.save(book);
     }
 
     @Override
@@ -62,7 +49,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBookById(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new NoBookWithIDFoundException("Book not found with the id of " + id));
     }
 
     @Override

@@ -1,27 +1,19 @@
 package com.example.Spring_crud_project.dto.mapper;
 
+
 import com.example.Spring_crud_project.dto.classes.AuthorDto;
 import com.example.Spring_crud_project.entity.Author;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValueCheckStrategy;
 
-import java.util.List;
-import java.util.stream.Collectors;
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+public interface AuthorMapper {
 
-@Component
-public class AuthorMapper {
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    AuthorDto toDto(Author author);
 
-    private final ModelMapper modelMapper;
-
-    public AuthorMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
-    public AuthorDto toDto(Author author) {
-        return modelMapper.map(author, AuthorDto.class);
-    }
-
-    public Author fromDto(AuthorDto dto) {
-        return modelMapper.map(dto, Author.class);
-    }
+    Author fromDto(AuthorDto authorDto);
 }
