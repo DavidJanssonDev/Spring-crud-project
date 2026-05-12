@@ -84,4 +84,9 @@ public class BookServiceImpl implements BookService {
         Book existing = getBookById(id);
         bookRepository.delete(existing);
     }
+
+    @Override
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findAllByTitleContainingIgnoreCase(title);
+    }
 }

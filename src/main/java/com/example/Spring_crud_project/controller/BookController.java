@@ -42,7 +42,7 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDto> getAll() {
+    public List<BookDto> getAllBooks() {
         return bookService.getAllBooks()
                 .stream()
                 .map(bookMapper::toDto)
@@ -50,7 +50,17 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookDto getById(@PathVariable Long id) {
+    public BookDto getBookById(@PathVariable Long id) {
         return bookMapper.toDto(bookService.getBookById(id));
     }
+
+    @GetMapping("/title/{title}")
+    public List<BookDto> getBooksByTitle(@PathVariable String title) {
+        return bookService.getBooksByTitle(title)
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
+
+    }
+
 }
