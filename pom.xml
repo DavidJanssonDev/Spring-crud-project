@@ -39,7 +39,7 @@
 		</dependency>
 
 		<!-- JPA — maps your @Entity classes to MySQL tables via Hibernate -->
-		<!-- Also gives you JpaRepository with free findAll, save, deleteById etc. -->
+		<!-- Also gives you Jpa Repository with free findAll, save, deleteById etc. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -53,7 +53,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
 		<!-- VALIDATION — enforces rules on incoming request data -->
 		<!-- Use @NotNull @NotBlank @Size @Email on your DTO fields -->
 		<dependency>
@@ -61,6 +60,33 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<!-- SECURITY -->
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.12.6</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.12.5</version>
+			<scope>runtime</scope>
+		</dependency>
 
 		<!-- TEST — replaces the invalid spring-boot-starter-webmvc-test from original -->
 		<!-- Provides JUnit 5 and Mockito for unit and integration testing -->
