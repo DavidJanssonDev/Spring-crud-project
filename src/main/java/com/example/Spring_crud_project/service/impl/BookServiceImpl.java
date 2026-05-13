@@ -24,8 +24,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book createBook(Book book) {
-
-
         Author incomingAuthor = book.getAuthor();
 
         Author authorToUse = authorRepository
