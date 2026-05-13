@@ -33,9 +33,7 @@ public class BookServiceImpl implements BookService {
                         incomingAuthor.getFirstName(),
                         incomingAuthor.getLastName()
                 )
-                .orElseGet(() -> {
-                    return authorRepository.save(incomingAuthor);
-                });
+                .orElseGet(() -> authorRepository.save(incomingAuthor));
 
         book.setAuthor(authorToUse);
         return bookRepository.save(book);

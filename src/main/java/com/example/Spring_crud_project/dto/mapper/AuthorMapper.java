@@ -10,9 +10,6 @@ import org.mapstruct.NullValueCheckStrategy;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface AuthorMapper {
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "firstName", source = "firstName")
-    @Mapping(target = "lastName", source = "lastName")
     AuthorDto toDto(Author author);
 
     Author fromDto(AuthorDto authorDto);

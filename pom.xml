@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>26</java.version>
 	</properties>
 	<dependencies>
 
@@ -53,19 +53,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- LOMBOK — auto-generates getters, setters, constructors at compile time -->
-		<!-- Use @Getter @Setter @NoArgsConstructor @AllArgsConstructor on your classes -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok-mapstruct-binding</artifactId>
-			<version>0.2.0</version>
-		</dependency>
 
 		<!-- VALIDATION — enforces rules on incoming request data -->
 		<!-- Use @NotNull @NotBlank @Size @Email on your DTO fields -->
@@ -98,6 +85,7 @@
 
 	</dependencies>
 
+
 	<build>
 		<plugins>
 			<plugin>
@@ -108,32 +96,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.13.0</version>
+				<version>3.14.1</version>
 
 				<configuration>
+					<release>26</release>
+
 					<annotationProcessorPaths>
-
-						<!-- Lombok FIRST -->
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>1.18.30</version>
-						</path>
-
-						<!-- Lombok MapStruct binding -->
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok-mapstruct-binding</artifactId>
-							<version>0.2.0</version>
-						</path>
-
-						<!-- MapStruct LAST -->
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
-							<version>1.5.5.Final</version>
+							<version>1.6.3</version>
 						</path>
-
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
