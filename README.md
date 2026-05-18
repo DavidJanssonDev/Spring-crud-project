@@ -106,10 +106,10 @@ The application will start on: **http://localhost:9000**
 
 ### User Roles
 
-| Role | Permissions |
-|------|-------------|
-| **USER** | Can create books |
-| **ADMIN** | Can create, update, and delete books |
+| Role          | Permissions                              |
+|---------------|------------------------------------------|
+| **USER**      | Can create books                         |
+| **ADMIN**     | Can create, update, and delete books     |
 | **Anonymous** | Can only read/view books (GET endpoints) |
 
 ### Security Rules
@@ -129,22 +129,22 @@ http://localhost:9000
 
 ### 🔑 Authentication Endpoints
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `POST` | `/auth/register` | Register new user (USER role) | No |
-| `POST` | `/auth/login` | Login and get JWT token | No |
-| `POST` | `/auth/create-admin` | Create admin user (⚠️ BACKDOOR) | No |
+| Method | Endpoint             | Description                     | Auth Required |
+|--------|----------------------|---------------------------------|---------------|
+| `POST` | `/auth/register`     | Register new user (USER role)   | No            |
+| `POST` | `/auth/login`        | Login and get JWT token         | No            |
+| `POST` | `/auth/create-admin` | Create admin user (⚠️ BACKDOOR) | No            |
 
 ### 📖 Book Endpoints
 
-| Method | Endpoint | Description | Auth Required | Role Required |
-|--------|----------|-------------|---------------|---------------|
-| `GET` | `/api/books` | Get all books | No | - |
-| `GET` | `/api/books/{id}` | Get book by ID | No | - |
-| `GET` | `/api/books/title/{title}` | Search books by title | No | - |
-| `POST` | `/api/books` | Create a new book | Yes | USER or ADMIN |
-| `PUT` | `/api/books/{id}` | Update a book | Yes | ADMIN only |
-| `DELETE` | `/api/books/{id}` | Delete a book | Yes | ADMIN only |
+| Method   | Endpoint                   | Description           | Auth Required | Role Required |
+|----------|----------------------------|-----------------------|---------------|---------------|
+| `GET`    | `/api/books`               | Get all books         | No            | -             |
+| `GET`    | `/api/books/{id}`          | Get book by ID        | No            | -             |
+| `GET`    | `/api/books/title/{title}` | Search books by title | No            | -             |
+| `POST`   | `/api/books`               | Create a new book     | Yes           | USER or ADMIN |
+| `PUT`    | `/api/books/{id}`          | Update a book         | Yes           | ADMIN only    |
+| `DELETE` | `/api/books/{id}`          | Delete a book         | Yes           | ADMIN only    |
 
 ---
 
@@ -537,18 +537,18 @@ When trying to create a book with a duplicate ISBN:
 
 ### BookDto
 
-| Field | Rules |
-|-------|-------|
-| `title` | Required, 2-100 characters |
-| `isbn` | Required, 10-20 characters, unique |
-| `author` | Required, valid AuthorDto |
+| Field    | Rules                              |
+|----------|------------------------------------|
+| `title`  | Required, 2-100 characters         |
+| `isbn`   | Required, 10-20 characters, unique |
+| `author` | Required, valid AuthorDto          |
 
 ### AuthorDto
 
-| Field | Rules |
-|-------|-------|
+| Field       | Rules                     |
+|-------------|---------------------------|
 | `firstName` | Required, 2-50 characters |
-| `lastName` | Required, 2-50 characters |
+| `lastName`  | Required, 2-50 characters |
 
 ---
 
@@ -668,29 +668,29 @@ All exceptions are caught and returned in a consistent format:
 
 ### `users` Table
 
-| Column | Type | Constraints | Description |
-|--------|------|-------------|-------------|
-| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | User ID |
-| `username` | VARCHAR(255) | UNIQUE, NOT NULL | Username |
-| `password` | VARCHAR(255) | NOT NULL | BCrypt hashed password |
-| `role` | VARCHAR(50) | NOT NULL | USER or ADMIN |
+| Column     | Type         | Constraints                 | Description            |
+|------------|--------------|-----------------------------|------------------------|
+| `id`       | BIGINT       | PRIMARY KEY, AUTO_INCREMENT | User ID                |
+| `username` | VARCHAR(255) | UNIQUE, NOT NULL            | Username               |
+| `password` | VARCHAR(255) | NOT NULL                    | BCrypt hashed password |
+| `role`     | VARCHAR(50)  | NOT NULL                    | USER or ADMIN          |
 
 ### `author` Table
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | BIGINT | Primary key (auto-increment) |
-| `first_name` | VARCHAR(255) | Author's first name |
-| `last_name` | VARCHAR(255) | Author's last name |
+| Column       | Type         | Description                  |
+|--------------|--------------|------------------------------|
+| `id`         | BIGINT       | Primary key (auto-increment) |
+| `first_name` | VARCHAR(255) | Author's first name          |
+| `last_name`  | VARCHAR(255) | Author's last name           |
 
 ### `book` Table
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | BIGINT | Primary key (auto-increment) |
-| `title` | VARCHAR(255) | Book title |
-| `isbn` | VARCHAR(255) | ISBN number (unique) |
-| `author_id` | BIGINT | Foreign key to `author` table |
+| Column      | Type         | Description                   |
+|-------------|--------------|-------------------------------|
+| `id`        | BIGINT       | Primary key (auto-increment)  |
+| `title`     | VARCHAR(255) | Book title                    |
+| `isbn`      | VARCHAR(255) | ISBN number (unique)          |
+| `author_id` | BIGINT       | Foreign key to `author` table |
 
 **Relationships:**
 - Many Books → One Author (Many-to-One)
