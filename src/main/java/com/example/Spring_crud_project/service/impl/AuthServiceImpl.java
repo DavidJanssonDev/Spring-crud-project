@@ -72,6 +72,29 @@ public class AuthServiceImpl implements AuthService {
         return new AuthResponse(token);
     }
 
+    // =========================
+    // CREATE ADMIN (BACKDOOR - REMOVE IN PRODUCTION!)
+    // =========================
+
+    @Override
+    public AuthResponse createAdmin(RegisterRequest request) {
+
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+
+        User admin = new User();
+        admin.setUsername(request.getUsername());
+        admin.setPassword(passwordEncoder.encode(request.getPassword()));
+        admin.setRole(Role.ADMIN);
+
+        userRepository.save(admin);
+
+        String token = jwtService.generateToken(admin.getUsername());
+
+        return new AuthResponse(token);
+    }
+
 }
 
 

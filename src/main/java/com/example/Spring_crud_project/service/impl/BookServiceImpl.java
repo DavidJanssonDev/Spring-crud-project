@@ -1,5 +1,6 @@
 package com.example.Spring_crud_project.service.impl;
 
+import com.example.Spring_crud_project.exception.customExceptions.IsbnBookAlreadyExistException;
 import com.example.Spring_crud_project.exception.customExceptions.NoBookWithIDFoundException;
 
 import com.example.Spring_crud_project.entity.Author;
@@ -25,6 +26,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book createBook(Book book) {
         Author incomingAuthor = book.getAuthor();
+        String isbn = book.getIsbn();
+
+        boolean bookIsbnExist = bookRepository.findByisbn(isbn) != null;
+
+        if (bookIsbnExist)
+            throw new IsbnBookAlreadyExistException("Book with the " + isbn + " already exists", isbn);
 
         Author authorToUse = authorRepository
                 .findByFirstNameAndLastName(
