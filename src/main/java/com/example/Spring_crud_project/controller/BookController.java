@@ -1,7 +1,7 @@
 package com.example.Spring_crud_project.controller;
 
 import jakarta.validation.Valid;
-import com.example.Spring_crud_project.dto.classes.BookDto;
+import com.example.Spring_crud_project.dto.classes.BookRequest;
 import com.example.Spring_crud_project.dto.mapper.BookMapper;
 import com.example.Spring_crud_project.entity.Book;
 import com.example.Spring_crud_project.service.BookService;
@@ -29,7 +29,7 @@ public class BookController {
     // =========================
 
     @GetMapping
-    public ResponseEntity<List<BookDto>> getAllBooks() {
+    public ResponseEntity<List<BookRequest>> getAllBooks() {
         return ResponseEntity.ok(
                 bookService.getAllBooks()
                         .stream()
@@ -39,14 +39,14 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookRequest> getBookById(@PathVariable Long id) {
         return ResponseEntity.ok(
                 bookMapper.toDto(bookService.getBookById(id))
         );
     }
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<List<BookDto>> getBooksByTitle(@PathVariable String title) {
+    public ResponseEntity<List<BookRequest>> getBooksByTitle(@PathVariable String title) {
         return ResponseEntity.ok(
                 bookService.getBooksByTitle(title)
                         .stream()
@@ -61,7 +61,7 @@ public class BookController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<BookDto> createBook(@Valid @RequestBody BookDto dto) {
+    public ResponseEntity<BookRequest> createBook(@Valid @RequestBody BookRequest dto) {
 
         Book saved = bookService.createBook(
                 bookMapper.fromDto(dto)
@@ -75,9 +75,9 @@ public class BookController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<BookDto> updateBook(
+    public ResponseEntity<BookRequest> updateBook(
             @PathVariable Long id,
-            @RequestBody BookDto dto
+            @RequestBody BookRequest dto
     ) {
         return ResponseEntity.ok(
                 bookMapper.toDto(

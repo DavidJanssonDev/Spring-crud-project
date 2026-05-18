@@ -2,7 +2,9 @@ package com.example.Spring_crud_project.exception;
 
 import com.example.Spring_crud_project.exception.customExceptions.IsbnBookAlreadyExistException;
 import com.example.Spring_crud_project.exception.customExceptions.NoBookWithIDFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,49 +19,56 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoBookWithIDFoundException.class)
-    public ResponseEntity<ErrorResponseClass> noBookWithIDFoundException(@NonNull NoBookWithIDFoundException error) {
-        ErrorResponseClass response = new ErrorResponseClass(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                error.getMessage(),
+    public ResponseEntity<ErrorResponse> handleNotFound(NoBookWithIDFoundException ex, HttpServletRequest request) {
+        return buildResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                request.getRequestURI(),
                 null
         );
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseClass> methodArgumentNotValidException(@NonNull MethodArgumentNotValidException error) {
-        Map<String, String> validationErrors = new HashMap<>();
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
 
-        error.getBindingResult()
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult()
                 .getFieldErrors()
-                .forEach(fieldError -> validationErrors.put(
-                        fieldError.getField(),
-                        fieldError.getDefaultMessage()
-                ));
+                .forEach(fieldError ->
+                        errors.put(
+                                fieldError.getField(),
+                                fieldError.getDefaultMessage()
+                        )
+                );
 
-        ErrorResponseClass response = new ErrorResponseClass(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+        return buildResponse(
+                HttpStatus.BAD_REQUEST,
                 "Validation failed",
-                validationErrors
+                request.getRequestURI(),
+                errors
         );
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(IsbnBookAlreadyExistException.class)
-    public ResponseEntity<ErrorResponseClass> isbnBookAlreadyExistException(@NonNull IsbnBookAlreadyExistException error) {
-        ErrorResponseClass response = new ErrorResponseClass(
-                LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
-                error.getMessage(),
+    public ResponseEntity<ErrorResponse> handleConflict(IsbnBookAlreadyExistException ex, HttpServletRequest request) {
+        return buildResponse(
+                HttpStatus.CONFLICT,
+                ex.getMessage(),
+                request.getRequestURI(),
                 null
         );
-        return  ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    private ResponseEntity<ErrorResponse> buildResponse(HttpStatus status, String message, String path, Map<String, String> validationErrors) {
+        ErrorResponse response = new ErrorResponse(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                message,
+                path,
+                validationErrors
+        );
+
+        return ResponseEntity.status(status).body(response);
     }
 }

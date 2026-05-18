@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
@@ -26,10 +27,12 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
                 403,
                 "FORBIDDEN",
                 "You do not have permission to access this resource",
-                request.getRequestURI()
+                request.getRequestURI(),
+                null
         );
 
         new ObjectMapper().writeValue(response.getOutputStream(), error);
