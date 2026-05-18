@@ -35,12 +35,10 @@ public class GlobalExceptionHandler {
 
         error.getBindingResult()
                 .getFieldErrors()
-                .forEach(fieldError -> {
-                    validationErrors.put(
-                            fieldError.getField(),
-                            fieldError.getDefaultMessage()
-                    );
-                });
+                .forEach(fieldError -> validationErrors.put(
+                        fieldError.getField(),
+                        fieldError.getDefaultMessage()
+                ));
 
         ErrorResponseClass response = new ErrorResponseClass(
                 LocalDateTime.now(),
