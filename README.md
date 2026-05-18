@@ -854,33 +854,40 @@ jwt.secret=YOUR_NEW_SECRET_HERE
 ### Create Multiple Books
 
 ```json
-// Book 1
-{
-  "title": "The Pragmatic Programmer",
-  "isbn": "978-0135957059",
-  "author": {"firstName": "David", "lastName": "Thomas"}
-}
-
-// Book 2
-{
-  "title": "Design Patterns",
-  "isbn": "978-0201633610",
-  "author": {"firstName": "Erich", "lastName": "Gamma"}
-}
-
-// Book 3
-{
-  "title": "Refactoring",
-  "isbn": "978-0201485677",
-  "author": {"firstName": "Martin", "lastName": "Fowler"}
-}
-
-// Book 4 - Same author as Book 1
-{
-  "title": "Programming Ruby",
-  "isbn": "978-0974514055",
-  "author": {"firstName": "David", "lastName": "Thomas"}
-}
+[
+    {
+      "title": "The Pragmatic Programmer",
+      "isbn": "978-0135957059",
+      "author": {
+        "firstName": "David", 
+        "lastName": "Thomas"
+      }
+    },
+    {
+      "title": "Design Patterns",
+      "isbn": "978-0201633610",
+      "author": {
+        "firstName": "Erich",
+        "lastName": "Gamma"
+      }
+    },
+    {
+      "title": "Refactoring",
+      "isbn": "978-0201485677",
+      "author": {
+        "firstName": "Martin", 
+        "lastName": "Fowler"
+      }
+    },
+    {
+      "title": "Programming Ruby",
+      "isbn": "978-0974514055",
+      "author": {
+        "firstName": "David", 
+        "lastName": "Thomas"
+      }
+    }
+]
 ```
 
 
