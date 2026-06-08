@@ -3,6 +3,8 @@ package com.example.Spring_crud_project.entity;
 import com.example.Spring_crud_project.entity.enums.Role;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -19,6 +21,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<FileEntity> fileEntities;
 
     public User() {}
 

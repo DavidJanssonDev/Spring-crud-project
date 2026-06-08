@@ -1,4 +1,4 @@
-package com.example.Spring_crud_project.service;
+package com.example.Spring_crud_project.service.book;
 
 import com.example.Spring_crud_project.entity.Book;
 

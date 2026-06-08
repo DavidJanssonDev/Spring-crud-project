@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import com.example.Spring_crud_project.dto.classes.BookRequest;
 import com.example.Spring_crud_project.dto.mapper.BookMapper;
 import com.example.Spring_crud_project.entity.Book;
-import com.example.Spring_crud_project.service.BookService;
+import com.example.Spring_crud_project.service.book.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
