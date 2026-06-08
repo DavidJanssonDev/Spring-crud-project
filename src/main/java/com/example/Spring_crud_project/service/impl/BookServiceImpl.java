@@ -7,7 +7,7 @@ import com.example.Spring_crud_project.entity.Author;
 import com.example.Spring_crud_project.entity.Book;
 import com.example.Spring_crud_project.repository.AuthorRepository;
 import com.example.Spring_crud_project.repository.BookRepository;
-import com.example.Spring_crud_project.service.BookService;
+import com.example.Spring_crud_project.service.book.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
