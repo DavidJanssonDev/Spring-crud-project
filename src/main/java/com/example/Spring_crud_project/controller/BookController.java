@@ -45,16 +45,6 @@ public class BookController {
         );
     }
 
-    @GetMapping("/title/{title}")
-    public ResponseEntity<List<BookRequest>> getBooksByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(
-                bookService.getBooksByTitle(title)
-                        .stream()
-                        .map(bookMapper::toDto)
-                        .toList()
-        );
-    }
-
     // =========================
     // WRITE OPERATIONS (SECURED)
     // =========================
@@ -64,13 +54,12 @@ public class BookController {
     public ResponseEntity<BookRequest> createBook(@Valid @RequestBody BookRequest dto) {
 
         Book saved = bookService.createBook(
-                bookMapper.fromDto(dto)
+            bookMapper.fromDto(dto)
         );
 
-
         return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(bookMapper.toDto(saved));
+            .status(HttpStatus.CREATED)
+            .body(bookMapper.toDto(saved));
     }
 
     @PutMapping("/{id}")
@@ -80,9 +69,9 @@ public class BookController {
             @RequestBody BookRequest dto
     ) {
         return ResponseEntity.ok(
-                bookMapper.toDto(
-                        bookService.updateBookById(id, bookMapper.fromDto(dto))
-                )
+            bookMapper.toDto(
+                    bookService.updateBookById(id, bookMapper.fromDto(dto))
+            )
         );
     }
 
